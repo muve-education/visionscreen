@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>目目非營利 視覺普查查詢網 - 視覺普查查詢系統</title>
+    <!-- Tailwind CSS 核心 -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入溫馨好讀的 Google 字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome 圖標庫 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
@@ -13,47 +16,83 @@
             theme: {
                 extend: {
                     colors: {
-                        cream: { 50: '#FFFEFA', 100: '#FFFDF0', 200: '#FFF9D3', 300: '#FFF3A7' },
+                        cream: {
+                            50: '#FFFEFA',
+                            100: '#FFFDF0',
+                            200: '#FFF9D3',
+                            300: '#FFF3A7',
+                        },
                         pastel: {
-                            pink: '#FF9E9E', pinkLight: '#FFECEC',
-                            teal: '#7FD1C4', tealLight: '#E6F7F5',
-                            yellow: '#FFE082', yellowLight: '#FFF8E1',
-                            green: '#9CDCA3', greenLight: '#EBF7EC',
+                            pink: '#FF9E9E',
+                            pinkLight: '#FFECEC',
+                            teal: '#7FD1C4',
+                            tealLight: '#E6F7F5',
+                            yellow: '#FFE082',
+                            yellowLight: '#FFF8E1',
+                            green: '#9CDCA3',
+                            greenLight: '#EBF7EC',
                             orange: '#FFA726',
                         }
                     },
-                    fontFamily: { sans: ['Noto Sans TC', 'Fredoka', 'sans-serif'] }
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'Fredoka', 'sans-serif'],
+                    }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Noto Sans TC', 'Fredoka', sans-serif; background-color: #FFFEFA; background-image: radial-gradient(#FFE39A 1px, transparent 1px); background-size: 24px 24px; }
-        .bubble-float { animation: float 6s ease-in-out infinite; }
-        .bubble-float-delayed { animation: float 6s ease-in-out infinite; animation-delay: 3s; }
-        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(2deg); } }
-        .pulse-soft { animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        @keyframes pulse-soft { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .85; transform: scale(1.02); } }
+        body {
+            font-family: 'Noto Sans TC', 'Fredoka', sans-serif;
+            background-color: #FFFEFA;
+            background-image: radial-gradient(#FFE39A 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        /* 軟萌浮動效果 */
+        .bubble-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        .bubble-float-delayed {
+            animation: float 6s ease-in-out infinite;
+            animation-delay: 3s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        /* 微光擴散效果 */
+        .pulse-soft {
+            animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .85; transform: scale(1.02); }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between text-slate-700">
 
     <header class="bg-white/80 backdrop-blur-md border-b-4 border-pastel-yellow sticky top-0 z-40 transition-all duration-300">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <!-- 溫馨標誌 (智慧雙模組：優先讀取 images.jpg，若無圖檔則自動啟動極致穩定的 SVG 向量 Logo 降級方案) -->
             <div class="flex items-center gap-3">
                 <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center overflow-hidden rounded-lg">
                     <img src="images.jpg" onerror="this.onerror=null; this.outerHTML='<svg class=\'w-full h-full\' viewBox=\'0 0 100 100\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M 59.4 19.4 A 15 15 0 0 1 80.6 40.6 L 40.6 80.6 A 15 15 0 0 1 19.4 59.4 Z\' fill=\'#00D2C4\' /><circle cx=\'58\' cy=\'54\' r=\'22\' fill=\'#FFB21E\' /></svg>';" class="w-full h-full object-contain" alt="目目非營利 Logo">
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold text-slate-800">目目非營利 視覺普查查詢網</h1>
-                    <p class="text-xs text-slate-500">今年度視覺普查線上查詢平台</p>
+                    <h1 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <span>目目非營利 視覺普查查詢網</span>
+                    </h1>
+                    <p class="text-xs text-slate-500">年度視覺普查線上查詢平台</p>
                 </div>
             </div>
+
+            <!-- 切換分頁按鈕 -->
             <div class="flex p-1 bg-slate-100 rounded-full border border-slate-200 shadow-inner">
-                <button id="tab-parent" onclick="switchTab('parent')" class="px-5 py-2 rounded-full text-sm font-bold bg-white text-slate-800 shadow-sm flex items-center gap-2">
+                <button id="tab-parent" onclick="switchTab('parent')" class="px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 bg-white text-slate-800 shadow-sm flex items-center gap-2">
                     <i class="fa-solid fa-face-smile text-pastel-pink"></i> 家長查詢區
                 </button>
-                <button id="tab-staff" onclick="switchTab('staff')" class="px-5 py-2 rounded-full text-sm font-bold text-slate-500 hover:text-slate-800 flex items-center gap-2">
+                <button id="tab-staff" onclick="switchTab('staff')" class="px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 text-slate-500 hover:text-slate-800 flex items-center gap-2">
                     <i class="fa-solid fa-database text-pastel-teal"></i> 工作人員後台
                 </button>
             </div>
@@ -61,13 +100,838 @@
     </header>
 
     <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-8 relative">
+        
+        <!-- 背景可愛裝飾球 -->
         <div class="absolute -top-10 -left-10 w-40 h-40 rounded-full bg-pastel-pink/10 blur-2xl pointer-events-none bubble-float"></div>
         <div class="absolute bottom-10 -right-10 w-52 h-52 rounded-full bg-pastel-teal/10 blur-2xl pointer-events-none bubble-float-delayed"></div>
 
-        <section id="section-parent" class="space-y-8">
-            <div class="bg-gradient-to-r from-pastel-pinkLight via-cream-100 to-pastel-tealLight p-6 sm:p-8 rounded-3xl border-3 border-dashed border-pastel-yellow shadow-sm flex flex-col md:flex-row items-center gap-6">
-                <div class="flex-grow space-y-3">
+        <!-- ========================================== -->
+        <!-- 區塊一：家長查詢區                          -->
+        <!-- ========================================== -->
+        <section id="section-parent" class="space-y-8 animate-fade-in">
+            <!-- 宣導 Banner (保留最可愛的粉綠色萌眼鏡圖案) -->
+            <div class="bg-gradient-to-r from-pastel-pinkLight via-cream-100 to-pastel-tealLight p-6 sm:p-8 rounded-3xl border-3 border-dashed border-pastel-yellow shadow-sm flex flex-col md:flex-row items-center gap-6 relative overflow-hidden">
+                <div class="flex-grow space-y-3 z-10">
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">2026年度 視覺普查計劃</h2>
-                    <p class="text-slate-600 leading-relaxed text-sm sm:text-base text-justify">親愛的家長，您好！目目協會重視每一位孩子的眼睛健康...感謝您的配合與支持。</p>
+                    <p class="text-slate-600 leading-relaxed text-sm sm:text-base whitespace-pre-line text-justify">親愛的家長，您好！目目協會重視每一位孩子的眼睛健康，我們深知良好的視覺功能是學習與發展的重要基礎。因此，我們誠摯地邀請各位家長帶孩子前往合適的眼科門診進行檢查。
+唯有先了解孩子的視力狀況，我們才能依據實際孩子需求安排最合適的眼動課程，讓課程更有效、更貼近孩子的能力與需要。
+
+感謝您一直以來的配合與支持，讓我們能一起為孩子的成長努力前行。我們特此建立查詢系統，方便您了解孩子今年視覺普查報告的繳交進度。</p>
                 </div>
-                <div class="w-32 h-32 flex-shrink-0 bg-white/60 p-3 rounded-full shadow-inner
+                <!-- 可愛眼睛插圖 SVG (維持原設計，不作任何更改) -->
+                <div class="w-32 h-32 flex-shrink-0 bg-white/60 p-3 rounded-full shadow-inner z-10 flex items-center justify-center">
+                    <svg class="w-24 h-24 text-pastel-teal" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="80" fill="#E6F7F5" />
+                        <rect x="60" y="85" width="30" height="30" rx="15" stroke="#7FD1C4" stroke-width="8" fill="white" />
+                        <rect x="110" y="85" width="30" height="30" rx="15" stroke="#7FD1C4" stroke-width="8" fill="white" />
+                        <path d="M90 100 H110" stroke="#7FD1C4" stroke-width="8" stroke-linecap="round" />
+                        <path d="M50 100 Q40 85 30 100" stroke="#7FD1C4" stroke-width="6" stroke-linecap="round" fill="none" />
+                        <path d="M150 100 Q160 85 170 100" stroke="#7FD1C4" stroke-width="6" stroke-linecap="round" fill="none" />
+                        <path d="M85 135 Q100 150 115 135" stroke="#FF9E9E" stroke-width="6" stroke-linecap="round" fill="none" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 搜尋輸入卡片 -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border-4 border-pastel-yellow shadow-md max-w-2xl mx-auto space-y-6 relative">
+                <div class="text-center space-y-2">
+                    <label for="search-input" class="text-lg font-bold text-slate-800 flex items-center justify-center gap-2">
+                        <span class="text-xl">🔍</span> 請輸入孩子的姓名
+                    </label>
+                    <p class="text-xs text-slate-400">系統將即時查詢雲端 Google 試算表之最新建檔狀態</p>
+                </div>
+
+                <!-- 搜尋列與按鈕 -->
+                <div class="relative flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="search-input" 
+                           placeholder="例如：陳小明" 
+                           class="flex-grow px-6 py-4 rounded-2xl border-2 border-slate-200 focus:border-pastel-teal focus:outline-none text-lg font-medium transition-all shadow-inner placeholder-slate-300"
+                           onkeyup="if(event.key === 'Enter') executeSearch()">
+                    <button onclick="executeSearch()" 
+                            class="px-8 py-4 rounded-2xl bg-pastel-teal hover:bg-teal-500 text-white font-bold text-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 active:scale-95">
+                        <span>開始查詢</span>
+                        <i class="fa-solid fa-chevron-right text-sm"></i>
+                    </button>
+                </div>
+
+                <!-- 快捷示範名單連結 -->
+                <div class="text-center">
+                    <button onclick="toggleTipModal()" class="text-xs text-pastel-pink hover:underline font-semibold flex items-center justify-center gap-1 mx-auto">
+                        <i class="fa-regular fa-lightbulb"></i> 不知道輸入什麼？點此查看測試示範姓名
+                    </button>
+                </div>
+            </div>
+
+            <div id="result-container" class="hidden max-w-2xl mx-auto transition-all duration-500 transform translate-y-4 opacity-0">
+                <!-- 這裡會由 JS 動態填入結果卡片 -->
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 區塊二：工作人員後台                       -->
+        <!-- ========================================== -->
+        <section id="section-staff" class="hidden space-y-6 animate-fade-in">
+            <!-- 後台頂部資訊列 -->
+            <div class="bg-slate-800 text-white p-6 rounded-3xl border-4 border-slate-700 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="space-y-1 text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-2">
+                        <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <h2 class="text-xl font-bold flex items-center gap-2">Google 試算表同步後台 <span class="text-xs text-slate-400 font-normal">(已安全驗證)</span></h2>
+                    </div>
+                    <p class="text-xs text-slate-400">工作人員在此進行的所有異動，將會同步自動寫入您的 Google 試算表內。</p>
+                </div>
+                <!-- 操作按鈕 -->
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <button onclick="openAddModal()" class="px-4 py-2 bg-pastel-teal hover:bg-teal-500 text-slate-900 font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 active:scale-95">
+                        <i class="fa-solid fa-plus"></i> 新增學生
+                    </button>
+                    <!-- 🔗 連結至雲端 Google 試算表按鈕 -->
+                    <a id="btn-go-to-sheet" href="#" target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 active:scale-95">
+                        <i class="fa-solid fa-file-excel"></i> 連結至試算表
+                    </a>
+                    <button onclick="exportToCSV()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 active:scale-95 border border-slate-600">
+                        <i class="fa-solid fa-file-csv"></i> 匯出 CSV 檔
+                    </button>
+                    <button onclick="lockBackend()" class="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 font-bold text-xs rounded-xl transition-all flex items-center gap-1.5 active:scale-95">
+                        <i class="fa-solid fa-lock"></i> 鎖定後台
+                    </button>
+                </div>
+            </div>
+
+            <!-- 搜尋與統計欄 -->
+            <div class="flex flex-col sm:flex-row gap-4 items-center justify-between bg-white p-4 rounded-2xl border-2 border-slate-200">
+                <div class="relative w-full sm:w-72">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </span>
+                    <input type="text" id="backend-search" oninput="filterBackendTable()" placeholder="快速搜尋後台名單..." class="w-full pl-9 pr-4 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:border-pastel-teal">
+                </div>
+                <div class="text-xs text-slate-500 flex items-center gap-3">
+                    <span class="bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">目前總名單數：<strong id="student-count" class="text-slate-800">0</strong> 筆</span>
+                    <span id="sync-status" class="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg border border-emerald-200 flex items-center gap-1"><i class="fa-solid fa-cloud-arrow-up"></i> 雲端 Google Sheet 同步中</span>
+                </div>
+            </div>
+
+            <!-- 模擬 Google Sheet 表格區 -->
+            <div class="bg-white rounded-2xl border-4 border-pastel-yellow shadow-md overflow-hidden">
+                <!-- 試算表頂部格子標題模擬 -->
+                <div class="bg-pastel-yellow/30 px-4 py-2 text-[11px] text-amber-900 font-mono font-bold flex items-center gap-3 border-b border-pastel-yellow/50">
+                    <span class="flex items-center gap-1 text-xs"><i class="fa-solid fa-table"></i> Google Sheets: 視覺普查篩檢名冊_2026</span>
+                    <span class="text-amber-700/60">|</span>
+                    <span>工作表 1 (名冊資料)</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold">
+                                <th class="py-3 px-4 w-12 text-center font-mono text-xs">A</th>
+                                <th class="py-3 px-4 text-xs font-mono">B (學生姓名)</th>
+                                <th class="py-3 px-4 text-xs font-mono">C (報告繳交日期)</th>
+                                <th class="py-3 px-4 w-32 text-center text-xs font-mono">D (操作)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-table-body" class="divide-y divide-slate-100 font-medium">
+                            <!-- 這裡會由 JS 動態渲染表格資料 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-100 border-t border-slate-200 py-6 text-center text-xs text-slate-400 space-y-2 mt-12">
+        <p>© 2026 目目非營利. All rights reserved.</p>
+        <p class="flex items-center justify-center gap-1">
+            <span>精心設計</span> <i class="fa-solid fa-heart text-pastel-pink"></i> <span>守護每個寶貝的精彩世界</span>
+        </p>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- 彈出視窗與互動式對話框                       -->
+    <!-- ========================================== -->
+
+    <!-- 工作人員後台密碼驗證彈窗 -->
+    <div id="password-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+        <div class="bg-white rounded-3xl border-4 border-pastel-teal max-w-sm w-full p-6 space-y-5 shadow-2xl transition-all scale-95 duration-300">
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 bg-pastel-tealLight text-pastel-teal rounded-full flex items-center justify-center text-xl mx-auto">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800">後台安全驗證</h3>
+                <p class="text-xs text-slate-400">進入工作人員管理後台需要輸入安全密碼</p>
+            </div>
+            <div class="space-y-3">
+                <input type="password" id="backend-password-input" 
+                       placeholder="請輸入密碼" 
+                       class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-pastel-teal text-center text-sm font-mono tracking-widest"
+                       onkeyup="if(event.key === 'Enter') verifyPassword()">
+                <p id="password-error" class="text-xs text-rose-500 text-center font-bold hidden">❌ 密碼錯誤，請重新輸入！</p>
+            </div>
+            <div class="flex gap-2 justify-center">
+                <button onclick="closePasswordModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold transition-all">取消</button>
+                <button onclick="verifyPassword()" class="px-4 py-2 rounded-xl bg-pastel-teal hover:bg-teal-500 text-slate-900 text-xs font-bold transition-all shadow-md">驗證登入</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 學生資料編輯/新增彈窗 -->
+    <div id="student-modal" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+        <div class="bg-white rounded-3xl border-4 border-pastel-teal max-w-md w-full p-6 space-y-6 shadow-2xl transition-all scale-95 duration-300">
+            <div class="flex items-center justify-between border-b pb-3 border-slate-100">
+                <h3 id="modal-title" class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-user-pen text-pastel-teal"></i> 新增學生資料
+                </h3>
+                <button onclick="closeStudentModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-all">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <!-- 輸入表單 -->
+            <form id="student-form" onsubmit="saveStudent(event)" class="space-y-4">
+                <input type="hidden" id="student-id">
+                <div class="space-y-1.5">
+                    <label for="form-name" class="text-xs font-bold text-slate-600 block">學生姓名 <span class="text-red-500">*</span></label>
+                    <input type="text" id="form-name" required placeholder="請輸入姓名" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-pastel-teal text-sm">
+                </div>
+                <div class="space-y-1.5">
+                    <label for="form-date" class="text-xs font-bold text-slate-600 block">報告繳交日期 <span class="text-red-500">*</span></label>
+                    <input type="date" id="form-date" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-pastel-teal text-sm">
+                </div>
+                <div class="flex gap-2 pt-2 justify-end">
+                    <button type="button" onclick="closeStudentModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold transition-all">取消</button>
+                    <button type="submit" class="px-4 py-2 rounded-xl bg-pastel-teal hover:bg-teal-500 text-slate-900 text-xs font-bold transition-all shadow-md">保存設定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 提示清單彈窗 -->
+    <div id="tip-modal" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+        <div class="bg-white rounded-3xl border-4 border-pastel-yellow max-w-lg w-full p-6 space-y-6 shadow-2xl">
+            <div class="flex items-center justify-between border-b pb-3 border-slate-100">
+                <h3 class="text-md font-bold text-slate-800 flex items-center gap-2">
+                    💡 系統快速測試範例
+                </h3>
+                <button onclick="toggleTipModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-all">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <p class="text-xs text-slate-500">
+                您可以點選下方姓名進行測試（其中 **陳小明** 是您剛在試算表手動建立的孩子。點選後，系統會直接透過您的 Google 試算表即時查詢喔）：
+            </p>
+            
+            <div id="tip-name-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 text-xs">
+                <!-- 由 JS 動態繪製 -->
+            </div>
+
+            <div class="text-center pt-2 border-t border-slate-100">
+                <button onclick="toggleTipModal()" class="px-5 py-2 bg-pastel-yellow hover:bg-amber-300 text-amber-950 font-bold rounded-xl text-xs shadow-sm transition-all">
+                    我知道了，去測試查詢！
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 吐司通知提示 (Toast) -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-slate-800 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transition-all duration-300 transform translate-y-20 opacity-0 z-50 border border-slate-700">
+        <span id="toast-icon">✨</span>
+        <span id="toast-text" class="text-xs font-bold">這是一條通知訊息！</span>
+    </div>
+
+    <script>
+        // 🔐 您的專屬 Google 試算表 Apps Script 鑰匙網址 (已為您正確串接)
+        const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycby4ksvraNhUgf7wKAPIpBwG-pykpYNqQz-UHVSy92rFAyAk7_g4oaeqN6j9vykySC1vwQ/exec";
+        const SECURITY_PASSWORD = "gogogo76324351";
+
+        // 🔗 您的 Google 試算表編輯網址 (請直接將下方 demo 網址更換為您真實的 Google Sheet 瀏覽連結)
+        const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1Xl27XUu9H4vM4H_8786_7329_demo/edit"; 
+
+        // 用來做「快速點選測試」的範例名單（包含您剛才在試算表手動建立的陳小明）
+        const sampleTipNames = [
+            "陳小明", "陳宇軒", "林妤婷", "黃子晴", "張睿恩", "李采恩", "王子豪", "吳承恩", "蔡依婷", "劉宇傑", "楊承翰", "許博雅"
+        ];
+
+        // 系統全域狀態
+        let students = [];
+        let isStaffAuthenticated = false;
+
+        // 頁面初始化
+        window.onload = function() {
+            renderTipNames();
+            
+            // 將「連結至試算表」按鈕導向您的試算表網址
+            const btnGoToSheet = document.getElementById('btn-go-to-sheet');
+            if (btnGoToSheet && GOOGLE_SHEET_URL) {
+                btnGoToSheet.href = GOOGLE_SHEET_URL;
+            }
+        }
+
+        // 更新後台統計人數
+        function updateStats() {
+            document.getElementById('student-count').innerText = students.length;
+        }
+
+        // 頁籤切換與密碼驗證邏輯
+        function switchTab(tab) {
+            const btnParent = document.getElementById('tab-parent');
+            const btnStaff = document.getElementById('tab-staff');
+            const secParent = document.getElementById('section-parent');
+            const secStaff = document.getElementById('section-staff');
+
+            if (tab === 'parent') {
+                // 切換至家長查詢區
+                btnParent.className = "px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 bg-white text-slate-800 shadow-sm flex items-center gap-2";
+                btnStaff.className = "px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 text-slate-500 hover:text-slate-800 flex items-center gap-2";
+                secParent.classList.remove('hidden');
+                secStaff.classList.add('hidden');
+            } else {
+                // 設為工作人員後台（需進行密碼保護驗證）
+                if (!isStaffAuthenticated) {
+                    openPasswordModal();
+                    return;
+                }
+                btnParent.className = "px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 text-slate-500 hover:text-slate-800 flex items-center gap-2";
+                btnStaff.className = "px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 bg-white text-slate-800 shadow-sm flex items-center gap-2";
+                secParent.classList.add('hidden');
+                secStaff.classList.remove('hidden');
+            }
+        }
+
+        // 密碼彈窗控制
+        function openPasswordModal() {
+            const modal = document.getElementById('password-modal');
+            modal.classList.remove('hidden');
+            document.getElementById('backend-password-input').value = '';
+            document.getElementById('password-error').classList.add('hidden');
+            setTimeout(() => {
+                document.getElementById('backend-password-input').focus();
+            }, 100);
+        }
+
+        function closePasswordModal() {
+            document.getElementById('password-modal').classList.add('hidden');
+        }
+
+        // 驗證後台密碼並同步下載 Google Sheet 清單
+        function verifyPassword() {
+            const passwordInput = document.getElementById('backend-password-input');
+            const errorMsg = document.getElementById('password-error');
+            
+            if (passwordInput.value === SECURITY_PASSWORD) {
+                isStaffAuthenticated = true;
+                closePasswordModal();
+                switchTab('staff');
+                showToast("🔓 密碼驗證成功！正在連接雲端試算表...", "success");
+                loadBackendData();
+            } else {
+                errorMsg.classList.remove('hidden');
+                passwordInput.value = '';
+                passwordInput.focus();
+                showToast("❌ 密碼錯誤，請重新確認！", "warning");
+            }
+        }
+
+        // 從雲端下載完整學生名冊
+        function loadBackendData() {
+            showToast("🔄 正在下載 Google 試算表最新名冊...", "info");
+            fetch(`${GOOGLE_API_URL}?action=list&password=${SECURITY_PASSWORD}`)
+                .then(res => res.json())
+                .then(resData => {
+                    if (resData.status === "success") {
+                        students = resData.data;
+                        renderBackendTable();
+                        updateStats();
+                        showToast("📊 雲端試算表名冊載入成功！", "success");
+                    } else {
+                        showToast("⚠️ 雲端讀取失敗：" + resData.message, "warning");
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    showToast("❌ 網路異常，無法與 Google Apps Script 建立連線！", "warning");
+                });
+        }
+
+        // 後台安全登出鎖定
+        function lockBackend() {
+            isStaffAuthenticated = false;
+            students = [];
+            switchTab('parent');
+            showToast("🔒 後台系統已安全鎖定，再次進入需輸入密碼", "info");
+        }
+
+        // 家長搜尋查詢功能（伺服器端一對一安全查詢）
+        function executeSearch() {
+            const searchInput = document.getElementById('search-input');
+            const queryName = searchInput.value.trim();
+            const resultContainer = document.getElementById('result-container');
+
+            if (!queryName) {
+                showToast("⚠️ 請先輸入您寶貝的姓名再進行查詢喔！", "warning");
+                return;
+            }
+
+            showToast("🔍 正在連接 Google 試算表查詢中...", "info");
+
+            // 向 Apps Script 安全查詢單一學生
+            fetch(`${GOOGLE_API_URL}?action=search&name=${encodeURIComponent(queryName)}`)
+                .then(res => res.json())
+                .then(resData => {
+                    resultContainer.classList.remove('hidden');
+                    resultContainer.classList.add('opacity-100', 'translate-y-0');
+                    resultContainer.classList.remove('translate-y-4', 'opacity-0');
+
+                    if (resData.status === "success" && resData.found) {
+                        const matchedStudent = resData.data;
+                        // 查有此人 -> 顯示已繳交 (無 "寶貝" 後綴，顯示端莊的西元中文日期)
+                        resultContainer.innerHTML = `
+                            <div class="bg-pastel-greenLight border-4 border-pastel-green rounded-3xl p-6 sm:p-8 shadow-md text-slate-800 space-y-6 animate-pulse-soft">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-14 h-14 rounded-full bg-pastel-green flex items-center justify-center text-3xl shadow-sm">
+                                        🎉
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-black text-emerald-800">您已完成今年度視覺普查</h3>
+                                        <p class="text-xs text-emerald-600 font-medium">系統查詢狀態：已繳交</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- 詳細資訊 -->
+                                <div class="bg-white/80 rounded-2xl p-5 border border-pastel-green/40 space-y-3">
+                                    <div class="flex justify-between items-center text-sm border-b pb-2 border-slate-100">
+                                        <span class="text-slate-500">孩子姓名</span>
+                                        <strong class="text-lg text-slate-800">${escapeHtml(matchedStudent.name)}</strong>
+                                    </div>
+                                    <div class="flex justify-between items-center text-sm">
+                                        <span class="text-slate-500">報告繳交日期</span>
+                                        <strong class="text-lg text-emerald-700 font-mono">${formatTaiwanDate(matchedStudent.date)}</strong>
+                                    </div>
+                                </div>
+
+                                <p class="text-xs sm:text-sm text-emerald-800/80 leading-relaxed text-center font-medium bg-emerald-50 py-3 px-4 rounded-xl border border-dashed border-pastel-green">
+                                    💖 感謝您的用心配合，與我們攜手守護孩子的視力健康！如需修改資料或有疑問，可隨時與我們聯繫。
+                                </p>
+                            </div>
+                        `;
+                        showToast("✨ 查詢成功！已為您顯示普查結果", "success");
+                    } else {
+                        // 查無此人 -> 顯示未繳交與關懷指引 (將聯絡按鈕改為純文字資訊卡，杜絕撥號與跳轉)
+                        resultContainer.innerHTML = `
+                            <div class="bg-pastel-pinkLight border-4 border-pastel-pink rounded-3xl p-6 sm:p-8 shadow-md text-slate-800 space-y-6">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-14 h-14 rounded-full bg-pastel-pink flex items-center justify-center text-3xl shadow-sm text-white">
+                                        ❤️
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-black text-rose-800">您尚未完成今年度視覺普查</h3>
+                                        <p class="text-xs text-rose-500 font-medium">系統查詢狀態：尚未繳交報告</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- 溫馨關懷區 -->
+                                <div class="bg-white/80 rounded-2xl p-5 border border-pastel-pink/40 space-y-4">
+                                    <h4 class="font-bold text-rose-800 text-sm flex items-center gap-1.5">
+                                        <i class="fa-solid fa-hand-holding-heart"></i> 給家長的一封溫馨提醒：
+                                    </h4>
+                                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                        親愛的家長，若您在帶孩子進行視力篩檢、取得報告或繳交的過程中，遇到任何生活、交通、時間上的困難，請您不用擔心，也不必獨自面對。
+                                        <strong class="text-rose-700">請主動與本協會社工聯絡，我們會提供最溫馨的陪伴與協助！</strong>
+                                    </p>
+                                </div>
+
+                                <!-- 快速聯絡字卡 (純文字無點擊跳轉功能) -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                                    <div class="bg-white border border-slate-200 p-3.5 rounded-2xl flex items-center gap-3 shadow-sm select-all">
+                                        <div class="w-10 h-10 rounded-xl bg-pastel-teal/20 text-pastel-teal flex items-center justify-center text-lg">
+                                            <i class="fa-solid fa-phone"></i>
+                                        </div>
+                                        <div class="text-left">
+                                            <span class="text-slate-400 block font-bold">社工專線</span>
+                                            <strong class="text-sm text-slate-700 font-mono">(02)-8786-7329 分機522</strong>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-white border border-slate-200 p-3.5 rounded-2xl flex items-center gap-3 shadow-sm text-left select-all">
+                                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg">
+                                            <i class="fa-brands fa-line"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-slate-400 block font-bold">線上 LINE 諮詢</span>
+                                            <strong class="text-sm text-emerald-600 font-mono">ID: 目目-菁秀(社工)</strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center pt-2">
+                                    <p class="text-[11px] text-slate-400">
+                                        💡 服務時間：週一至週五 09:00 - 18:00 (例假日及國定假日除外)
+                                    </p>
+                                </div>
+                            </div>
+                        `;
+                        showToast("ℹ️ 未查到此學生。若有遇到問題請聯繫社工！", "info");
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    showToast("❌ 雲端伺服器連線失敗，請檢查網路連線！", "warning");
+                });
+        }
+
+        // 端莊的西元日期解析與格式化器 (防時區雜訊、防 GMT 字串)
+        function formatTaiwanDate(dateVal) {
+            if (!dateVal) return '';
+            let dateObj;
+            if (dateVal instanceof Date) {
+                dateObj = dateVal;
+            } else {
+                let cleanStr = dateVal.toString().trim();
+                
+                // 檢查是否已是中文格式
+                if (cleanStr.includes('西元') && cleanStr.includes('年') && cleanStr.includes('日')) {
+                    return cleanStr;
+                }
+
+                // 檢查是否為 YYYY-MM-DD 或 YYYY/MM/DD 標準字串
+                const ymdRegex = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/;
+                const match = cleanStr.match(ymdRegex);
+                if (match) {
+                    return `西元 ${parseInt(match[1])} 年 ${parseInt(match[2])} 月 ${parseInt(match[3])} 日`;
+                }
+                
+                // 嘗試一般解析 (例如 ISO 時間戳)
+                dateObj = new Date(cleanStr);
+            }
+
+            // 若解析成功，輸出純粹的「西元 年 月 日」格式
+            if (dateObj && !isNaN(dateObj.getTime())) {
+                const y = dateObj.getFullYear();
+                const m = dateObj.getMonth() + 1;
+                const d = dateObj.getDate();
+                return `西元 ${y} 年 ${m} 月 ${d} 日`;
+            }
+            
+            // 兜底方案：解析一般的 JS Date.toString()
+            const gmtMatch = dateVal.toString().match(/([A-Za-z]{3})\s([A-Za-z]{3})\s(\d{1,2})\s(\d{4})/);
+            if (gmtMatch) {
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const y = gmtMatch[4];
+                const m = monthNames.indexOf(gmtMatch[2]) + 1;
+                const d = gmtMatch[3];
+                if (m > 0) {
+                    return `西元 ${y} 年 ${m} 月 ${d} 日`;
+                }
+            }
+            
+            return dateVal.toString();
+        }
+
+        // ==========================================
+        // 工作人員後台：CRUD 網頁與 Google 試算表同步
+        // ==========================================
+
+        function renderBackendTable(filteredStudents = null) {
+            const list = filteredStudents || students;
+            const tbody = document.getElementById('student-table-body');
+            tbody.innerHTML = '';
+
+            if (list.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="py-12 text-center text-slate-400 font-bold">
+                            <div class="space-y-2">
+                                <div class="text-4xl">📁</div>
+                                <p class="text-sm">目前名單中空空如也...</p>
+                                <p class="text-xs text-slate-300">請在試算表編輯名單，或點選上方「新增學生」！</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            list.forEach((st, index) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition-colors duration-150";
+                
+                // 後台表格亦顯示格式化後的西元日期
+                const formattedDateText = formatTaiwanDate(st.date);
+                
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-mono text-xs text-slate-400 text-center bg-slate-50/50">${index + 1}</td>
+                    <td class="py-3 px-4 font-bold text-slate-800">${escapeHtml(st.name)}</td>
+                    <td class="py-3 px-4 text-slate-500 font-mono">${formattedDateText}</td>
+                    <td class="py-3 px-4 text-center">
+                        <div class="flex items-center justify-center gap-1.5">
+                            <button onclick="openEditModal(${st.id})" class="p-1.5 rounded-lg text-pastel-teal hover:bg-pastel-teal/10 transition-colors" title="編輯資料">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteStudent(${st.id})" class="p-1.5 rounded-lg text-rose-400 hover:bg-rose-50 transition-colors" title="刪除資料">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 轉義 HTML 避免 XSS 注入
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.toString().replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        // 後台模糊搜尋過濾
+        function filterBackendTable() {
+            const kw = document.getElementById('backend-search').value.trim().toLowerCase();
+            if (!kw) {
+                renderBackendTable();
+                return;
+            }
+            const filtered = students.filter(st => {
+                const formattedDateText = formatTaiwanDate(st.date).toLowerCase();
+                return st.name.toLowerCase().includes(kw) || formattedDateText.includes(kw);
+            });
+            renderBackendTable(filtered);
+        }
+
+        // 開啟新增學生視窗
+        function openAddModal() {
+            document.getElementById('modal-title').innerHTML = `<i class="fa-solid fa-user-plus text-pastel-teal"></i> 新增學生資料`;
+            document.getElementById('student-id').value = '';
+            document.getElementById('form-name').value = '';
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('form-date').value = today;
+
+            const modal = document.getElementById('student-modal');
+            modal.classList.remove('hidden');
+        }
+
+        // 開啟編輯資料視窗
+        function openEditModal(id) {
+            const target = students.find(s => s.id === id);
+            if (!target) return;
+
+            document.getElementById('modal-title').innerHTML = `<i class="fa-solid fa-user-pen text-pastel-teal"></i> 編輯學生資料`;
+            document.getElementById('student-id').value = target.id;
+            document.getElementById('form-name').value = target.name;
+            
+            // 保持 input[type=date] 接受的 yyyy-MM-dd 標準格式
+            let standardDate = target.date;
+            if (target.date && target.date.includes('年')) {
+                // 如果是已格式化的中文，轉換回標準日期輸入格式
+                const match = target.date.match(/西元\s*(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日/);
+                if (match) {
+                    const y = match[1];
+                    const m = match[2].padStart(2, '0');
+                    const d = match[3].padStart(2, '0');
+                    standardDate = `${y}-${m}-${d}`;
+                }
+            }
+            document.getElementById('form-date').value = standardDate;
+
+            const modal = document.getElementById('student-modal');
+            modal.classList.remove('hidden');
+        }
+
+        function closeStudentModal() {
+            document.getElementById('student-modal').classList.add('hidden');
+        }
+
+        // 保存單筆學生修改/新增並寫入 Google 試算表
+        function saveStudent(e) {
+            e.preventDefault();
+            const idVal = document.getElementById('student-id').value;
+            const nameVal = document.getElementById('form-name').value.trim();
+            const dateVal = document.getElementById('form-date').value;
+
+            if (!nameVal || !dateVal) {
+                showToast("⚠️ 請填妥學生姓名與報告繳交日期！", "warning");
+                return;
+            }
+
+            showToast("🔄 正在寫入 Google 雲端試算表...", "info");
+
+            const payload = {
+                action: "save",
+                password: SECURITY_PASSWORD,
+                id: idVal ? parseInt(idVal) : null,
+                name: nameVal,
+                date: dateVal
+            };
+
+            fetch(GOOGLE_API_URL, {
+                method: "POST",
+                mode: "cors",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    showToast(`✨ 成功！「${nameVal}」資料已同步寫入 Google Sheet`, "success");
+                    closeStudentModal();
+                    loadBackendData(); // 重新整理清單
+                } else {
+                    showToast("❌ 雲端寫入失敗：" + data.message, "warning");
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                showToast("❌ 網路連線錯誤，無法完成同步！", "warning");
+            });
+        }
+
+        // 刪除學生紀錄
+        function deleteStudent(id) {
+            const target = students.find(s => s.id === id);
+            if (!target) return;
+
+            const confirmBox = document.createElement('div');
+            confirmBox.id = "custom-confirm";
+            confirmBox.className = "fixed inset-0 bg-slate-950/40 backdrop-blur-sm flex items-center justify-center z-50 p-4";
+            confirmBox.innerHTML = `
+                <div class="bg-white rounded-3xl border-4 border-rose-400 max-w-sm w-full p-6 space-y-4 shadow-2xl text-center">
+                    <div class="w-12 h-12 bg-rose-50 rounded-full flex items-center justify-center text-rose-500 text-xl mx-auto"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <div class="space-y-1">
+                        <h4 class="font-bold text-slate-800 text-base">確認刪除這筆資料？</h4>
+                        <p class="text-xs text-slate-500">確定要將「${target.name}」的紀錄從 Google 試算表中移除嗎？此動作無法復原。</p>
+                    </div>
+                    <div class="flex gap-2 justify-center pt-2">
+                        <button onclick="closeConfirmModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold transition-all">取消</button>
+                        <button onclick="executeDeleteStudent(${id})" class="px-4 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold transition-all shadow-md">確定刪除</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(confirmBox);
+        }
+
+        // 關閉確認視窗
+        function closeConfirmModal() {
+            const confirmBox = document.getElementById('custom-confirm');
+            if (confirmBox) confirmBox.remove();
+        }
+
+        // 執行刪除
+        function executeDeleteStudent(id) {
+            showToast("🗑️ 正在從 Google 試算表中刪除資料...", "info");
+            
+            const payload = {
+                action: "delete",
+                password: SECURITY_PASSWORD,
+                id: id
+            };
+
+            fetch(GOOGLE_API_URL, {
+                method: "POST",
+                mode: "cors",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    showToast("🗑️ 學生資料已成功自雲端試算表移除！", "success");
+                    closeConfirmModal();
+                    loadBackendData();
+                } else {
+                    showToast("❌ 刪除失敗：" + data.message, "warning");
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                showToast("❌ 網路連線錯誤，無法完成刪除！", "warning");
+            });
+        }
+
+        // 匯出當前名冊為標準格式 CSV 檔
+        function exportToCSV() {
+            if (students.length === 0) {
+                showToast("⚠️ 目前暫無名冊資料可匯出！", "warning");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
+            csvContent += "學號ID,學生姓名,報告繳交日期\n";
+
+            students.forEach(st => {
+                csvContent += `${st.id},"${st.name}","${st.date}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `目目非營利_視覺普查篩檢名冊_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showToast("📊 試算表 CSV 下載成功！", "success");
+        }
+
+        // 快速測試
+        function toggleTipModal() {
+            const modal = document.getElementById('tip-modal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // 繪製快捷點選測試姓名
+        function renderTipNames() {
+            const container = document.getElementById('tip-name-grid');
+            container.innerHTML = '';
+            
+            sampleTipNames.forEach(name => {
+                const btn = document.createElement('button');
+                btn.className = "bg-slate-50 hover:bg-pastel-pinkLight hover:text-rose-600 px-2 py-1.5 rounded-lg border border-slate-200 text-slate-600 transition-all font-medium flex items-center justify-between text-[11px] truncate active:scale-95";
+                btn.onclick = function() {
+                    document.getElementById('search-input').value = name;
+                    toggleTipModal();
+                    executeSearch();
+                }
+                btn.innerHTML = `<span>${name}</span> <i class="fa-solid fa-copy text-[9px] opacity-40"></i>`;
+                container.appendChild(btn);
+            });
+        }
+
+        // Toast 訊息提示
+        let toastTimeout;
+        function showToast(message, type = "success") {
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toast-text');
+            const toastIcon = document.getElementById('toast-icon');
+
+            if (type === "success") {
+                toastIcon.innerText = "✨";
+                toast.className = "fixed bottom-6 right-6 bg-emerald-800 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transition-all duration-300 z-50 border border-emerald-700 font-bold text-xs";
+            } else if (type === "warning") {
+                toastIcon.innerText = "⚠️";
+                toast.className = "fixed bottom-6 right-6 bg-amber-700 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transition-all duration-300 z-50 border border-amber-600 font-bold text-xs";
+            } else if (type === "info") {
+                toastIcon.innerText = "ℹ️";
+                toast.className = "fixed bottom-6 right-6 bg-slate-800 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transition-all duration-300 z-50 border border-slate-700 font-bold text-xs";
+            }
+
+            toastText.innerText = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
