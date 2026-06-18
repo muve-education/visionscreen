@@ -74,12 +74,14 @@
 
     <header class="bg-white/80 backdrop-blur-md border-b-4 border-pastel-yellow sticky top-0 z-40 transition-all duration-300">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <!-- 溫馨標誌 -->
+            <!-- 溫馨標誌 (目目官方 Logo SVG - 100% 還原傾斜角度 / 與交疊位置) -->
             <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-full bg-pastel-pinkLight flex items-center justify-center border-2 border-pastel-pink shadow-sm">
-                    <svg class="w-8 h-8 text-pastel-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center">
+                    <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 傾斜青綠色膠囊 (從左下往右上傾斜 /) -->
+                        <rect x="38" y="15" width="24" height="70" rx="12" fill="#00D2C4" transform="rotate(45 50 50)" />
+                        <!-- 疊加明黃色圓形 -->
+                        <circle cx="58" cy="50" r="22" fill="#FFB21E" />
                     </svg>
                 </div>
                 <div>
@@ -112,18 +114,17 @@
         <!-- 區塊一：家長查詢區                          -->
         <!-- ========================================== -->
         <section id="section-parent" class="space-y-8 animate-fade-in">
-            <!-- 宣導 Banner -->
+            <!-- 宣導 Banner (保留原本極具設計感的可愛綠色眼鏡插圖) -->
             <div class="bg-gradient-to-r from-pastel-pinkLight via-cream-100 to-pastel-tealLight p-6 sm:p-8 rounded-3xl border-3 border-dashed border-pastel-yellow shadow-sm flex flex-col md:flex-row items-center gap-6 relative overflow-hidden">
                 <div class="flex-grow space-y-3 z-10">
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">2026年度 視覺普查計劃</h2>
-                    <p class="text-slate-600 leading-relaxed text-sm sm:text-base whitespace-pre-line">親愛的家長，您好！
-目目協會非常重視每一位孩子的眼睛健康，我們深知良好的視覺功能是學習與發展的重要基礎。因此，我們誠摯地各位家長帶孩子前往合適的眼科門診進行檢查。
+                    <p class="text-slate-600 leading-relaxed text-sm sm:text-base whitespace-pre-line text-justify">親愛的家長，您好！目目協會重視每一位孩子的眼睛健康，我們深知良好的視覺功能是學習與發展的重要基礎。因此，我們誠摯地邀請各位家長帶孩子前往合適的眼科門診進行檢查。
 
 唯有先了解孩子的視力狀況，我們才能依據實際孩子需求安排最合適的眼動課程，讓課程更有效、更貼近孩子的能力與需要。
 
-感謝您一直以來的配合與支持，讓我們能一起為孩子的成長努力前行。  我們特此建立查詢系統，方便您了解孩子今年視覺普查報告的繳交進度。  </p>
+感謝您一直以來的配合與支持，讓我們能一起為孩子的成長努力前行。我們特此建立查詢系統，方便您了解孩子今年視覺普查報告的繳交進度。</p>
                 </div>
-                <!-- 可愛插圖 SVG -->
+                <!-- 可愛眼睛插圖 SVG (維持原設計不變) -->
                 <div class="w-32 h-32 flex-shrink-0 bg-white/60 p-3 rounded-full shadow-inner z-10 flex items-center justify-center">
                     <svg class="w-24 h-24 text-pastel-teal" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="100" cy="100" r="80" fill="#E6F7F5" />
@@ -173,7 +174,7 @@
         </section>
 
         <!-- ========================================== -->
-        <!-- 區塊二：工作人員後台 (模擬 Google Sheet)   -->
+        <!-- 區塊二：工作人員後台                       -->
         <!-- ========================================== -->
         <section id="section-staff" class="hidden space-y-6 animate-fade-in">
             <!-- 後台頂部資訊列 -->
@@ -263,7 +264,7 @@
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <h3 class="text-lg font-bold text-slate-800">後台安全驗證</h3>
-                <p class="text-xs text-slate-400">進入工作人員管理後台需要輸入安全密碼</p>
+                <p class="text-xs text-slate-400">進入工作人員 management 後台需要輸入安全密碼</p>
             </div>
             <div class="space-y-3">
                 <input type="password" id="backend-password-input" 
@@ -347,8 +348,8 @@
         const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycby4ksvraNhUgf7wKAPIpBwG-pykpYNqQz-UHVSy92rFAyAk7_g4oaeqN6j9vykySC1vwQ/exec";
         const SECURITY_PASSWORD = "gogogo76324351";
 
-        // 🔗 您的 Google 試算表編輯網址
-        const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1OFUK8ca7Wut9jy-nLNHI4cZgmJXANSHt4hPnP1o8LdQ/edit?usp=sharing"; 
+        // 🔗 您的 Google 試算表編輯網址（請在此處填入您那張試算表的一般瀏覽網址）
+        const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1Xl27XUu9H4vM4H_8786_7329_demo/edit"; 
 
         // 用來做「快速點選測試」的範例名單（包含您剛才在試算表手動建立的陳小明）
         const sampleTipNames = [
@@ -464,43 +465,6 @@
             showToast("🔒 後台系統已安全鎖定，再次進入需輸入密碼", "info");
         }
 
-        function formatTaiwanDate(dateStr) {
-            if (!dateStr) return '';
-            
-            // 轉換為字串並去除多餘空格
-            const str = dateStr.toString().trim();
-            
-            // 1. 優先處理純日期格式 YYYY-MM-DD 或 YYYY/MM/DD
-            const simpleDateMatch = str.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
-            if (simpleDateMatch) {
-                const y = simpleDateMatch[1];
-                const m = parseInt(simpleDateMatch[2], 10);
-                const d = parseInt(simpleDateMatch[3], 10);
-                return `西元 ${y} 年 ${m} 月 ${d} 日`;
-            }
-            
-            // 2. 處理可能含有 ISO 規格時間標記的字串 (例如 "2026-05-20T00:00:00.000Z")
-            if (str.includes('T')) {
-                const datePart = str.split('T')[0];
-                const parts = datePart.split('-');
-                if (parts.length === 3) {
-                    return `西元 ${parts[0]} 年 ${parseInt(parts[1], 10)} 月 ${parseInt(parts[2], 10)} 日`;
-                }
-            }
-            
-            // 3. 通用 Date 物件解析 (防止帶有 GMT 或 UTC 時區標籤導致格式破裂)
-            const parsedDate = new Date(str);
-            if (!isNaN(parsedDate.getTime())) {
-                const y = parsedDate.getFullYear();
-                const m = parsedDate.getMonth() + 1;
-                const d = parsedDate.getDate();
-                return `西元 ${y} 年 ${m} 月 ${d} 日`;
-            }
-            
-            // 若全部解析失敗，安全降級回傳原始字串
-            return str;
-        }
-
         // 家長搜尋查詢功能（伺服器端一對一安全查詢）
         function executeSearch() {
             const searchInput = document.getElementById('search-input');
@@ -524,7 +488,7 @@
 
                     if (resData.status === "success" && resData.found) {
                         const matchedStudent = resData.data;
-                        // 查有此人 -> 顯示已繳交
+                        // 查有此人 -> 顯示已繳交 (無 "寶貝" 後綴，顯示端莊的西元中文日期)
                         resultContainer.innerHTML = `
                             <div class="bg-pastel-greenLight border-4 border-pastel-green rounded-3xl p-6 sm:p-8 shadow-md text-slate-800 space-y-6 animate-pulse-soft">
                                 <div class="flex items-center gap-4">
@@ -556,7 +520,7 @@
                         `;
                         showToast("✨ 查詢成功！已為您顯示普查結果", "success");
                     } else {
-                        // 查無此人 -> 顯示未繳交與純文字關懷指引卡
+                        // 查無此人 -> 顯示未繳交與關懷指引 (將聯絡按鈕改為純文字資訊卡，杜絕撥號與跳轉)
                         resultContainer.innerHTML = `
                             <div class="bg-pastel-pinkLight border-4 border-pastel-pink rounded-3xl p-6 sm:p-8 shadow-md text-slate-800 space-y-6">
                                 <div class="flex items-center gap-4">
@@ -580,7 +544,7 @@
                                     </p>
                                 </div>
 
-                                <!-- 快速聯絡字卡 (純展示文字，無自動聯動功能) -->
+                                <!-- 快速聯絡字卡 (純文字無點擊跳轉功能) -->
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                                     <div class="bg-white border border-slate-200 p-3.5 rounded-2xl flex items-center gap-3 shadow-sm select-all">
                                         <div class="w-10 h-10 rounded-xl bg-pastel-teal/20 text-pastel-teal flex items-center justify-center text-lg">
@@ -598,7 +562,7 @@
                                         </div>
                                         <div>
                                             <span class="text-slate-400 block font-bold">線上 LINE 諮詢</span>
-                                            <strong class="text-sm text-emerald-600">ID: 目目-菁秀(社工)</strong>
+                                            <strong class="text-sm text-emerald-600 font-mono">ID: 目目-菁秀(社工)</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -617,6 +581,54 @@
                     console.error(err);
                     showToast("❌ 雲端伺服器連線失敗，請檢查網路連線！", "warning");
                 });
+        }
+
+        // 端莊的西元日期解析與格式化器 (防時區雜訊、防 GMT 字串)
+        function formatTaiwanDate(dateVal) {
+            if (!dateVal) return '';
+            let dateObj;
+            if (dateVal instanceof Date) {
+                dateObj = dateVal;
+            } else {
+                let cleanStr = dateVal.toString().trim();
+                
+                // 檢查是否已是中文格式
+                if (cleanStr.includes('西元') && cleanStr.includes('年') && cleanStr.includes('日')) {
+                    return cleanStr;
+                }
+
+                // 檢查是否為 YYYY-MM-DD 或 YYYY/MM/DD 標準字串
+                const ymdRegex = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/;
+                const match = cleanStr.match(ymdRegex);
+                if (match) {
+                    return `西元 ${parseInt(match[1])} 年 ${parseInt(match[2])} 月 ${parseInt(match[3])} 日`;
+                }
+                
+                // 嘗試一般解析 (例如 ISO 時間戳)
+                dateObj = new Date(cleanStr);
+            }
+
+            // 若解析成功，輸出純粹的「西元 年 月 日」格式
+            if (dateObj && !isNaN(dateObj.getTime())) {
+                const y = dateObj.getFullYear();
+                const m = dateObj.getMonth() + 1;
+                const d = dateObj.getDate();
+                return `西元 ${y} 年 ${m} 月 ${d} 日`;
+            }
+            
+            // 兜底方案：解析一般的 JS Date.toString()
+            const gmtMatch = dateVal.toString().match(/([A-Za-z]{3})\s([A-Za-z]{3})\s(\d{1,2})\s(\d{4})/);
+            if (gmtMatch) {
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const y = gmtMatch[4];
+                const m = monthNames.indexOf(gmtMatch[2]) + 1;
+                const d = gmtMatch[3];
+                if (m > 0) {
+                    return `西元 ${y} 年 ${m} 月 ${d} 日`;
+                }
+            }
+            
+            return dateVal.toString();
         }
 
         // ==========================================
@@ -646,10 +658,14 @@
             list.forEach((st, index) => {
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 transition-colors duration-150";
+                
+                // 後台表格亦顯示格式化後的西元日期
+                const formattedDateText = formatTaiwanDate(st.date);
+                
                 tr.innerHTML = `
                     <td class="py-3 px-4 font-mono text-xs text-slate-400 text-center bg-slate-50/50">${index + 1}</td>
                     <td class="py-3 px-4 font-bold text-slate-800">${escapeHtml(st.name)}</td>
-                    <td class="py-3 px-4 text-slate-500 font-mono">${formatTaiwanDate(st.date)}</td>
+                    <td class="py-3 px-4 text-slate-500 font-mono">${formattedDateText}</td>
                     <td class="py-3 px-4 text-center">
                         <div class="flex items-center justify-center gap-1.5">
                             <button onclick="openEditModal(${st.id})" class="p-1.5 rounded-lg text-pastel-teal hover:bg-pastel-teal/10 transition-colors" title="編輯資料">
@@ -684,10 +700,10 @@
                 renderBackendTable();
                 return;
             }
-            const filtered = students.filter(st => 
-                st.name.toLowerCase().includes(kw) || 
-                st.date.includes(kw)
-            );
+            const filtered = students.filter(st => {
+                const formattedDateText = formatTaiwanDate(st.date).toLowerCase();
+                return st.name.toLowerCase().includes(kw) || formattedDateText.includes(kw);
+            });
             renderBackendTable(filtered);
         }
 
@@ -711,7 +727,20 @@
             document.getElementById('modal-title').innerHTML = `<i class="fa-solid fa-user-pen text-pastel-teal"></i> 編輯學生資料`;
             document.getElementById('student-id').value = target.id;
             document.getElementById('form-name').value = target.name;
-            document.getElementById('form-date').value = target.date;
+            
+            // 保持 input[type=date] 接受的 yyyy-MM-dd 標準格式
+            let standardDate = target.date;
+            if (target.date && target.date.includes('年')) {
+                // 如果是已格式化的中文，轉換回標準日期輸入格式
+                const match = target.date.match(/西元\s*(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日/);
+                if (match) {
+                    const y = match[1];
+                    const m = match[2].padStart(2, '0');
+                    const d = match[3].padStart(2, '0');
+                    standardDate = `${y}-${m}-${d}`;
+                }
+            }
+            document.getElementById('form-date').value = standardDate;
 
             const modal = document.getElementById('student-modal');
             modal.classList.remove('hidden');
@@ -789,6 +818,7 @@
             document.body.appendChild(confirmBox);
         }
 
+        // 關閉確認視窗
         function closeConfirmModal() {
             const confirmBox = document.getElementById('custom-confirm');
             if (confirmBox) confirmBox.remove();
@@ -861,6 +891,7 @@
             }
         }
 
+        // 繪製快捷點選測試姓名
         function renderTipNames() {
             const container = document.getElementById('tip-name-grid');
             container.innerHTML = '';
@@ -878,7 +909,7 @@
             });
         }
 
-        // Toast
+        // Toast 訊息提示
         let toastTimeout;
         function showToast(message, type = "success") {
             const toast = document.getElementById('toast');
