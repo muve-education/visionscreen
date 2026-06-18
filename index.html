@@ -382,7 +382,6 @@
 
     <!-- Toast -->
     <div id="toast" class="fixed bottom-6 right-6 bg-slate-800 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transition-all duration-300 transform translate-y-20 opacity-0 z-50 border border-slate-700">
-        <span id="toast-icon">✨</span>
         <span id="toast-text" class="text-xs font-bold">這是一條通知訊息！</span>
     </div>
 
@@ -1242,8 +1241,15 @@
         function showToast(message, type = "success") {
             const toast = document.getElementById('toast');
             const toastText = document.getElementById('toast-text');
-            const toastIcon = document.getElementById('toast-icon');
 
+            if (!toast || !toastText) return;
+
+            if (type === "success") {
+                toast.className = "fixed bottom-6 right-6 bg-emerald-800 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center transition-all duration-300 z-50 border border-emerald-700 font-bold text-xs";
+            } else if (type === "warning") {
+                toast.className = "fixed bottom-6 right-6 bg-amber-700 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center transition-all duration-300 z-50 border border-amber-600 font-bold text-xs";
+            } else {
+                toast.className = "fixed bottom-6 right-6 bg-slate-800 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center transition-all duration-300 z-50 border border-slate-700 font-bold text-xs";
             }
 
             toastText.innerText = message;
@@ -1256,6 +1262,7 @@
                 toast.classList.remove('translate-y-0', 'opacity-100');
             }, 3000);
         }
+
     </script>
 </body>
 </html>
