@@ -398,7 +398,7 @@
         };
 
         const sampleTipNames = [
-            "陳小明", "陳宇軒", "林妤婷", "黃子晴", "張睿恩", "李采恩", "王子豪", "吳承恩", "蔡依婷", "劉宇傑", "楊承翰", "許博雅"
+            "阿目", "果果", "肚肚鳥"
         ];
 
         let students = [];
@@ -630,11 +630,11 @@
             const resultContainer = document.getElementById('result-container');
 
             if (!queryName) {
-                showToast("⚠️ 請先輸入孩子的姓名再進行查詢", "warning");
+                showToast("⚠️請先輸入孩子的姓名再進行查詢", "warning");
                 return;
             }
 
-            showToast("🔍 正在連接 Google 試算表查詢中...", "info");
+            showToast("🔍正在連接 Google 試算表查詢中...", "info");
 
             try {
                 const data = await fetchJson(buildUrl('search', {
@@ -648,14 +648,14 @@
                 if (data.status === "success" && data.found) {
                     const matchedStudent = normalizeStudent(data.data || {});
                     renderFoundResult(resultContainer, matchedStudent);
-                    showToast("✨ 查詢成功！已為您顯示普查結果", "success");
+                    showToast("✨查詢成功！已為您顯示普查結果", "success");
                 } else {
                     renderNotFoundResult(resultContainer);
-                    showToast("ℹ️ 未查到此學生。若有遇到問題請聯繫社工", "info");
+                    showToast("ℹ️未查到此學生。若有遇到問題請聯繫社工", "info");
                 }
             } catch (err) {
                 console.error(err);
-                showToast("❌ 雲端伺服器連線失敗，請檢查網路連線", "warning");
+                showToast("❌雲端伺服器連線失敗，請檢查網路連線", "warning");
             }
         }
 
