@@ -181,7 +181,7 @@
             <div class="bg-gradient-to-r from-pastel-pinkLight via-cream-100 to-pastel-tealLight p-6 sm:p-8 rounded-3xl border-3 border-dashed border-pastel-yellow shadow-sm flex flex-col md:flex-row items-center gap-6 relative overflow-hidden">
                 <div class="flex-grow space-y-3 z-10">
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">2026年度 視覺普查計劃</h2>
-                    <p class="text-slate-600 leading-relaxed text-sm sm:text-base whitespace-pre-line text-justify">親愛的家長，您好！目目協會重視每一位孩子的眼睛健康，我們深知良好的視覺功能是學習與發展的重要基礎。
+                    <p class="text-slate-600 leading-relaxed text-sm sm:text-base whitespace-pre-line text-justify">親愛的家長，您好！目目協會重視每一位孩子的眼睛健康，我們深知良好的視覺功能是學習與發展的重要基礎。因此，我們誠摯地邀請各位家長帶孩子前往合適的眼科門診進行檢查。
 唯有先了解孩子的視力狀況，我們才能依據實際孩子需求安排最合適的眼動課程，讓課程更有效、更貼近孩子的能力與需要。
 
 感謝您一直以來的配合與支持，讓我們能一起為孩子的成長努力前行。我們特此建立查詢系統，方便您了解孩子今年視覺普查報告的繳交進度。</p>
@@ -313,6 +313,7 @@
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <h3 class="text-lg font-bold text-slate-800">後台安全驗證</h3>
+                <p class="text-xs text-slate-400">密碼不再寫死於網頁原始碼；系統會交由 Apps Script 後端驗證。</p>
             </div>
             <div class="space-y-3">
                 <input type="password" id="backend-password-input"
@@ -389,11 +390,12 @@
         /*
          * 重要設定
          * 1. GOOGLE_API_URL 是 Apps Script 部署為 Web App 後的 /exec 網址。
-         * 2. 不要再把工作人員密碼寫在前端。工作人員輸入密碼後，前端只把密碼送到 Apps Script，由 Apps Script 驗證。
-         * 3. 真正安全的版本，建議 Apps Script 端改成 Google 帳號白名單驗證，而不是只靠密碼。
+         * 2. 不要再把工作人員密碼寫在前端。工作人員輸入密碼後，前端只用 POST 傳送到 Apps Script 驗證。
+         * 3. 後台 list/save/delete 都走 POST，避免密碼出現在網址參數中。
+         * 4. 真正安全的版本，建議 Apps Script 端改成 Google 帳號白名單驗證，而不是只靠密碼。
          */
         const CONFIG = {
-            GOOGLE_API_URL: "https://script.google.com/macros/s/AKfycby4ksvraNhUgf7wKAPIpBwG-pykpYNqQz-UHVSy92rFAyAk7_g4oaeqN6j9vykySC1vwQ/exec",
+            GOOGLE_API_URL: "https://script.google.com/macros/s/AKfycbzXs6Mob2A3uL-spNXIPuTuywcFZD_ZZspU4hnvj2ZMO1Hg7PyydimZKlPeVjhLrzq0/exec",
             GOOGLE_SHEET_URL: "https://docs.google.com/spreadsheets/d/1Xl27XUu9H4vM4H_8786_7329_demo/edit"
         };
 
@@ -456,6 +458,15 @@
                 console.error('Non-JSON response:', text);
                 throw new Error('伺服器回傳格式不是 JSON');
             }
+        }
+
+        async function postToAppsScript(payload) {
+            return fetchJson(CONFIG.GOOGLE_API_URL, {
+                method: "POST",
+                mode: "cors",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            });
         }
 
         function escapeHtml(value) {
@@ -557,8 +568,11 @@
             setSyncStatus("驗證中", "info");
 
             try {
-                const url = buildUrl('list', { password: candidatePassword });
-                const data = await fetchJson(url);
+                // 後台登入與完整名冊讀取改用 POST，避免密碼出現在網址參數中。
+                const data = await postToAppsScript({
+                    action: "list",
+                    password: candidatePassword
+                });
 
                 if (data.status === "success") {
                     staffPasswordForThisSession = candidatePassword;
@@ -596,7 +610,12 @@
             setSyncStatus("同步中", "info");
 
             try {
-                const data = await fetchJson(buildUrl('list', { password: staffPasswordForThisSession }));
+                // 後台完整名冊讀取改用 POST，避免密碼出現在網址參數中。
+                const data = await postToAppsScript({
+                    action: "list",
+                    password: staffPasswordForThisSession
+                });
+
                 if (data.status === "success") {
                     students = Array.isArray(data.data) ? data.data.map(normalizeStudent) : [];
                     renderBackendTable();
@@ -630,11 +649,11 @@
             const resultContainer = document.getElementById('result-container');
 
             if (!queryName) {
-                showToast("⚠️請先輸入孩子的姓名再進行查詢", "warning");
+                showToast("⚠️ 請先輸入孩子的姓名再進行查詢", "warning");
                 return;
             }
 
-            showToast("🔍正在連接 Google 試算表查詢中...", "info");
+            showToast("🔍 正在連接 Google 試算表查詢中...", "info");
 
             try {
                 const data = await fetchJson(buildUrl('search', {
@@ -648,14 +667,14 @@
                 if (data.status === "success" && data.found) {
                     const matchedStudent = normalizeStudent(data.data || {});
                     renderFoundResult(resultContainer, matchedStudent);
-                    showToast("✨查詢成功！已為您顯示普查結果", "success");
+                    showToast("✨ 查詢成功！已為您顯示普查結果", "success");
                 } else {
                     renderNotFoundResult(resultContainer);
-                    showToast("ℹ️未查到此學生。若有遇到問題請聯繫社工", "info");
+                    showToast("ℹ️ 未查到此學生。若有遇到問題請聯繫社工", "info");
                 }
             } catch (err) {
                 console.error(err);
-                showToast("❌雲端伺服器連線失敗，請檢查網路連線", "warning");
+                showToast("❌ 雲端伺服器連線失敗，請檢查網路連線", "warning");
             }
         }
 
@@ -917,14 +936,14 @@
                     topRow.appendChild(statusChip);
 
                     const dateRow = document.createElement('div');
-                    dateRow.className = "flex items-center justify-between gap-3 bg-slate-50 rounded-xl px-3 py-2 text-xs";
+                    dateRow.className = "flex flex-col gap-1 bg-slate-50 rounded-xl px-3 py-2 text-xs";
 
                     const dateLabel = document.createElement('span');
                     dateLabel.className = "text-slate-400 font-bold whitespace-nowrap";
                     dateLabel.textContent = "報告繳交日期";
 
                     const dateText = document.createElement('span');
-                    dateText.className = "text-slate-700 font-mono font-bold one-line-ellipsis text-right";
+                    dateText.className = "text-slate-700 font-mono font-bold leading-relaxed whitespace-normal break-keep";
                     dateText.title = formattedDate;
                     dateText.textContent = formattedDate;
 
@@ -1040,12 +1059,7 @@
             setSyncStatus("寫入中", "info");
 
             try {
-                const data = await fetchJson(CONFIG.GOOGLE_API_URL, {
-                    method: "POST",
-                    mode: "cors",
-                    headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify(payload)
-                });
+                const data = await postToAppsScript(payload);
 
                 if (data.status === "success") {
                     showToast(`✨ 成功！「${nameVal}」資料已同步寫入 Google Sheet`, "success");
@@ -1116,12 +1130,7 @@
             setSyncStatus("刪除中", "info");
 
             try {
-                const data = await fetchJson(CONFIG.GOOGLE_API_URL, {
-                    method: "POST",
-                    mode: "cors",
-                    headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify(payload)
-                });
+                const data = await postToAppsScript(payload);
 
                 if (data.status === "success") {
                     closeConfirmModal();
