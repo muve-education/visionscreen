@@ -313,7 +313,6 @@
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <h3 class="text-lg font-bold text-slate-800">後台安全驗證</h3>
-                <p class="text-xs text-slate-400">密碼不再寫死於網頁原始碼；系統會交由 Apps Script 後端驗證。</p>
             </div>
             <div class="space-y-3">
                 <input type="password" id="backend-password-input"
@@ -675,9 +674,9 @@
                             <span class="text-slate-500">孩子姓名</span>
                             <strong class="text-lg text-slate-800 text-right one-line-ellipsis">${escapeHtml(student.name)}</strong>
                         </div>
-                        <div class="flex justify-between items-center text-sm gap-4">
-                            <span class="text-slate-500">報告繳交日期</span>
-                            <strong class="text-lg text-emerald-700 font-mono text-right one-line-ellipsis">${escapeHtml(formatTaiwanDate(student.date))}</strong>
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center text-sm gap-1 sm:gap-4">
+                            <span class="text-slate-500 whitespace-nowrap">報告繳交日期</span>
+                            <strong class="w-full sm:w-auto text-base sm:text-lg text-emerald-700 font-mono text-left sm:text-right leading-relaxed whitespace-normal break-keep overflow-visible">${escapeHtml(formatTaiwanDate(student.date))}</strong>
                         </div>
                     </div>
                     <p class="text-xs sm:text-sm text-emerald-800/80 leading-relaxed text-center font-medium bg-emerald-50 py-3 px-4 rounded-xl border border-dashed border-pastel-green">
