@@ -400,7 +400,7 @@
         };
 
         const sampleTipNames = [
-            "陳小明", "陳宇軒", "林妤婷", "黃子晴", "張睿恩", "李采恩", "王子豪", "吳承恩", "蔡依婷", "劉宇傑", "楊承翰", "許博雅"
+            "阿目", "果果", "肚肚鳥"
         ];
 
         let students = [];
@@ -1244,15 +1244,6 @@
             const toastText = document.getElementById('toast-text');
             const toastIcon = document.getElementById('toast-icon');
 
-            if (type === "success") {
-                toastIcon.innerText = "✨";
-                toast.className = "fixed bottom-6 right-6 bg-emerald-800 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transition-all duration-300 z-50 border border-emerald-700 font-bold text-xs";
-            } else if (type === "warning") {
-                toastIcon.innerText = "⚠️";
-                toast.className = "fixed bottom-6 right-6 bg-amber-700 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transition-all duration-300 z-50 border border-amber-600 font-bold text-xs";
-            } else {
-                toastIcon.innerText = "ℹ️";
-                toast.className = "fixed bottom-6 right-6 bg-slate-800 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transition-all duration-300 z-50 border border-slate-700 font-bold text-xs";
             }
 
             toastText.innerText = message;
